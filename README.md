@@ -70,6 +70,7 @@ bir 30 dk bekletebiliyor.
 bu değerleri değiştirip hem daha hızlı çıktı alınabilir. Hem de anolimi şansını değiştirebilirsiniz.
 
  -`manual-input.sh`: Komut satırından manuel veri gönderimi
+  git bash de çalıştırılması gerekiyor.
  -örnek çalışma komutu -> manual-input.sh 41.0 29.0 15 30 20 10 50 
 
 ---
