@@ -61,7 +61,16 @@ Gerçek zamanlı hava kalitesi izleme platformu. Veriler REST API üzerinden al�
 ###  Scriptler
 
 - `auto-test.py`: Otomatik rastgele ve anomali verisi gönderir
-- `manual-input.sh`: Komut satırından manuel veri gönderimi
+- açık kaynaklı bir siteden saniyede bir veri çekebilyor. İlk 500 veri için yaklaşık 
+bir 30 dk bekletebiliyor. 
+
+   NUM_LOCATIONS = 500
+   ANOMALY_CHANCE = 0.05  # %5 anomali
+
+bu değerleri değiştirip hem daha hızlı çıktı alınabilir. Hem de anolimi şansını değiştirebilirsiniz.
+
+ -`manual-input.sh`: Komut satırından manuel veri gönderimi
+ -örnek çalışma komutu -> manual-input.sh 41.0 29.0 15 30 20 10 50 
 
 ---
 

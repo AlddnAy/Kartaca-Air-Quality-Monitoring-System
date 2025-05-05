@@ -1,0 +1,41 @@
+2025-05-06 00:18:58 - Script başlatıldı
+2025-05-06 00:18:58 - Parametreler alındı: LAT=41.0, LON=29.0, PM25=15, PM10=30, NO2=20, SO2=10, O3=50
+2025-05-06 00:18:58 - API URL: http://app:8083/api/air_quality_data
+2025-05-06 00:18:58 - API bağlantısı test ediliyor...
+2025-05-06 00:19:07 - HATA: API'ye bağlanılamıyor
+2025-05-06 00:19:57 - Script başlatıldı
+2025-05-06 00:19:57 - Parametreler alındı: LAT=41.0, LON=29.0, PM25=15, PM10=30, NO2=20, SO2=10, O3=50
+2025-05-06 00:19:58 - API URL: http://localhost:8083/api/air_quality_data
+2025-05-06 00:19:58 - API bağlantısı test ediliyor...
+2025-05-06 00:19:58 - Gönderilecek veri: {
+    "latitude": 41.0,
+    "longitude": 29.0,
+    "timestamp": "2025-05-06T00:19:58+03:00",
+    "pm25": 15,
+    "pm10": 30,
+    "no2": 20,
+    "so2": 10,
+    "o3": 50,
+    "anomaly": false
+}
+2025-05-06 00:19:59 - Veri gönderiliyor...
+2025-05-06 00:19:59 - HATA: Veri gönderilemedi. HTTP Kodu: 400
+2025-05-06 00:19:59 - API Yanıtı: {"timestamp":"2025-05-05T21:19:59.171+00:00","status":400,"error":"Bad Request","path":"/api/air_quality_data"}
+2025-05-06 00:20:42 - Script başlatıldı
+2025-05-06 00:20:42 - Parametreler alındı: LAT=41.0, LON=29.0, PM25=15, PM10=30, NO2=20, SO2=10, O3=50
+2025-05-06 00:20:42 - API URL: http://localhost:8083/api/air_quality_data
+2025-05-06 00:20:42 - API bağlantısı test ediliyor...
+2025-05-06 00:20:42 - Gönderilecek veri: {
+    "latitude": 41.0,
+    "longitude": 29.0,
+    "timestamp": "2025-05-05T21:20:42.000Z",
+    "pm25": 15,
+    "pm10": 30,
+    "no2": 20,
+    "so2": 10,
+    "o3": 50,
+    "anomaly": false
+}
+2025-05-06 00:20:42 - Veri gönderiliyor...
+2025-05-06 00:20:43 - BAŞARILI: Veri başarıyla gönderildi
+2025-05-06 00:20:43 - API Yanıtı: Data queued successfully!

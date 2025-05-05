@@ -5,6 +5,7 @@ from datetime import datetime
 import os
 from geopy.geocoders import Nominatim
 import logging
+import json
 
 # Logging ayarları
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -79,6 +80,7 @@ def main():
             data, anomaly = generate_measurement(lat, lon, ANOMALY_CHANCE)
             try:
                 logger.info(f"Veri gönderiliyor: {idx+1}/{NUM_LOCATIONS}")
+                logger.info(f"Gönderilen veri: {json.dumps(data, indent=2)}")
                 r = requests.post(API_URL, json=data)
                 status = "ANOMALİ" if anomaly else "NORMAL"
                 logger.info(f"[{status}] {idx+1}/{NUM_LOCATIONS} -> {r.status_code}")
@@ -86,6 +88,7 @@ def main():
                     logger.error(f"Hata kodu: {r.status_code}, Yanıt: {r.text}")
             except Exception as e:
                 logger.error(f"Veri gönderme hatası: {str(e)}")
+                logger.error(f"Hata detayı: {type(e).__name__}")
         
         logger.info("40 dakika bekleniyor...")
         time.sleep(40 * 60)
