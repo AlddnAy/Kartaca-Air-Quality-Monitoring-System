@@ -4,8 +4,14 @@ import requests
 from datetime import datetime
 import os
 from geopy.geocoders import Nominatim
+import logging
+
+# Logging ayarları
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 API_URL = os.environ.get("API_URL", "http://app:8083/api/air_quality_data")
+logger.info(f"API URL: {API_URL}")
 
 WHO_LIMITS = {
     "pm25": (0, 25),
@@ -25,15 +31,18 @@ def random_value(limits, anomaly=False):
         return random.uniform(limits[0], limits[1])
 
 def random_land_coordinate(geolocator, max_attempts=20):
-    for _ in range(max_attempts):
+    for attempt in range(max_attempts):
         lat = random.uniform(-60, 80)
         lon = random.uniform(-180, 180)
         try:
             location = geolocator.reverse((lat, lon), language='en', exactly_one=True, timeout=10)
             if location and 'country' in location.raw.get('address', {}):
+                logger.info(f"Lokasyon bulundu: {location.address}")
                 return lat, lon
-        except Exception:
+        except Exception as e:
+            logger.warning(f"Lokasyon bulunamadı (deneme {attempt + 1}/{max_attempts}): {str(e)}")
             continue
+    logger.warning("Maksimum deneme sayısına ulaşıldı, varsayılan lokasyon kullanılıyor")
     return 39.0, 35.0  # fallback: Türkiye
 
 def generate_measurement(lat, lon, anomaly_chance):
@@ -52,28 +61,33 @@ def generate_measurement(lat, lon, anomaly_chance):
     return data, anomaly
 
 def main():
+    logger.info("Script başlatılıyor...")
     geolocator = Nominatim(user_agent="airquality-tester")
 
-    # 1000 kara lokasyonu üret
-    print("1000 kara lokasyonu üretiliyor...")
+    # 500 kara lokasyonu üret
+    logger.info(f"{NUM_LOCATIONS} kara lokasyonu üretiliyor...")
     locations = []
     while len(locations) < NUM_LOCATIONS:
         lat, lon = random_land_coordinate(geolocator)
         if (lat, lon) not in locations:
             locations.append((lat, lon))
-        print(f"{len(locations)}/{NUM_LOCATIONS}", end="\r")
+            logger.info(f"Lokasyon eklendi: {len(locations)}/{NUM_LOCATIONS}")
 
     while True:
-        print(f"\n{datetime.now()} - 1000 lokasyona veri gönderiliyor...")
+        logger.info(f"{datetime.now()} - {NUM_LOCATIONS} lokasyona veri gönderiliyor...")
         for idx, (lat, lon) in enumerate(locations):
             data, anomaly = generate_measurement(lat, lon, ANOMALY_CHANCE)
             try:
+                logger.info(f"Veri gönderiliyor: {idx+1}/{NUM_LOCATIONS}")
                 r = requests.post(API_URL, json=data)
                 status = "ANOMALİ" if anomaly else "NORMAL"
-                print(f"[{status}] {idx+1}/{NUM_LOCATIONS} -> {r.status_code}")
+                logger.info(f"[{status}] {idx+1}/{NUM_LOCATIONS} -> {r.status_code}")
+                if r.status_code != 200:
+                    logger.error(f"Hata kodu: {r.status_code}, Yanıt: {r.text}")
             except Exception as e:
-                print("Hata:", e)
-        print("10 dakika bekleniyor...\n")
+                logger.error(f"Veri gönderme hatası: {str(e)}")
+        
+        logger.info("40 dakika bekleniyor...")
         time.sleep(40 * 60)
 
 if __name__ == "__main__":

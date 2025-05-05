@@ -31,11 +31,12 @@ services:
     image: python:3.11
     volumes:
       - ./auto-test.py:/app/auto-test.py
-    command: ["sh", "-c", "pip install requests geopy && python /app/auto-test.py"]
+    command: ["sh", "-c", "pip install requests geopy && python -u /app/auto-test.py"]
     depends_on:
       - app
     environment:
       - API_URL=http://app:8083/api/air_quality_data
+      - PYTHONUNBUFFERED=1
 
   frontend:
     build:
