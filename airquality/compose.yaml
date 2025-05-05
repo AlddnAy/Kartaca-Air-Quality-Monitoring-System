@@ -1,0 +1,50 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=airqualitydb'
+      - 'POSTGRES_PASSWORD=1905'
+      - 'POSTGRES_USER=postgres'
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: 'rabbitmq:3-management'
+    environment:
+      - 'RABBITMQ_DEFAULT_PASS=guest'
+      - 'RABBITMQ_DEFAULT_USER=guest'
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+
+  app:
+    build: .
+    ports:
+      - "8083:8083"
+    depends_on:
+      - postgres
+      - rabbitmq
+
+  autotest:
+    image: python:3.11
+    volumes:
+      - ./auto-test.py:/auto-test.py
+    command: ["sh", "-c", "pip install requests geopy && python /auto-test.py"]
+    depends_on:
+      - app
+    environment:
+      - API_URL=http://app:8083/api/air_quality_data
+
+  frontend:
+    build:
+      context: ./airquality-frontend
+    container_name: airquality-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - app
+
+volumes:
+  pgdata:
