@@ -30,8 +30,8 @@ services:
   autotest:
     image: python:3.11
     volumes:
-      - ./auto-test.py:/auto-test.py
-    command: ["sh", "-c", "pip install requests geopy && python /auto-test.py"]
+      - ./auto-test.py:/app/auto-test.py
+    command: ["sh", "-c", "pip install requests geopy && python /app/auto-test.py"]
     depends_on:
       - app
     environment:
