@@ -103,7 +103,7 @@
 ### 1. Projeyi Klonla
 
 ```bash
-git clone https://github.com/kullanici/air-quality-monitoring.git
+git clone https://github.com/AlddnAy/Kartaca-Air-Quality-Monitoring-System.git
 cd air-quality-monitoring
 
 
