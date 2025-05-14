@@ -66,6 +66,8 @@ bir 30 dk bekletebiliyor.
 
    NUM_LOCATIONS = 500
    ANOMALY_CHANCE = 0.05  # %5 anomali
+- Her 500 veri yüklendiğinde 40 dakika bir bekleme süresi var. Yine test aşamasında değerler düşürülebilir.
+   time.sleep(40 * 60)
 
 bu değerleri değiştirip hem daha hızlı çıktı alınabilir. Hem de anolimi şansını değiştirebilirsiniz.
 
