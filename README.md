@@ -141,9 +141,7 @@ PostgreSQL: localhost:5432 (user: postgres, pass: 1905, db: airqualitydb)
 Kullanım Rehberi
 Veri Gönderme
 Postman veya curl ile
-bash
-Kopyala
-Düzenle
+
 curl -X POST http://localhost:8083/api/air_quality_data \
 -H "Content-Type: application/json" \
 -d '{"stationId": "X01", "latitude": 40.1, "longitude": 29.0, "pm25": 30, "pm10": 60, "no2": 180, "so2": 15, "o3": 95}'
@@ -151,9 +149,7 @@ Otomatik Veri Gönderimi
 Docker Compose ile birlikte auto-test.py scripti başlar ve rastgele/anomali verisi gönderir.
 
 Manuel Veri Girişi
-bash
-Kopyala
-Düzenle
+
 ./scripts/manual-input.sh
 
 
@@ -172,8 +168,6 @@ POST /api/air_quality_data
 Body (JSON):
 
 json
-Kopyala
-Düzenle
 {
   "stationId": "X01",
   "latitude": 40.1,
@@ -187,6 +181,4 @@ Düzenle
 Cevap:
 
 arduino
-Kopyala
-Düzenle
 "Data queued successfully!"
